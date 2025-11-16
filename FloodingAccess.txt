@@ -1,0 +1,29 @@
+&lt;!-- Simple client-side password gate (INSECURE: for convenience/demos only) --&gt;
+<div style="font-family:Arial, sans-serif; max-width:420px; margin:24px auto; text-align:center;">
+<h2>Enter access code</h2>
+&lt;input id="pw" type="password" placeholder="Password" style="width:100%; padding:10px; font-size:16px; box-sizing:border-box;" /&gt;
+&lt;button id="go" style="margin-top:12px; padding:10px 16px; font-size:16px; cursor:pointer;"&gt;Enter&lt;/button&gt;
+<div style="margin-top:10px; color:#a00; min-height:18px;"></div>
+</div>
+
+&lt;script&gt;
+(function(){
+const CORRECT = "Flooding@1234"; // &lt;&lt;&lt; CHANGE THIS to your password
+const TARGET = "https://experience.arcgis.com/experience/616ddbbfea2e45dcaa50fb5e14634d50/Map"; // &lt;&lt;&lt; CHANGE THIS to the page URL (see instructions)
+const pw = document.getElementById('pw');
+const btn = document.getElementById('go');
+const msg = document.getElementById('msg');
+
+function gotoTarget(){
+// try to change top window (works when allowed); fallback to same window
+try { top.location.href = TARGET; } catch(e) { window.location.href = TARGET; }
+}
+
+btn.addEventListener('click', function(){
+if (pw.value === CORRECT) gotoTarget();
+else { msg.textContent = "Incorrect password — try again."; pw.value = ""; pw.focus(); }
+});
+
+pw.addEventListener('keyup', function(e){ if (e.key === 'Enter') btn.click(); });
+})();
+&lt;/script&gt;
